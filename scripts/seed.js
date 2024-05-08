@@ -1,6 +1,6 @@
 const { db } = require('@vercel/postgres');
 
-const {peliculas}= requiere('../lib/placeholder-data');
+const { peliculas }= require('../app/lib/placeholder-data');
 var key="6d7434b2";
 
 async function seedPeliculas(client) {
@@ -28,6 +28,10 @@ async function seedPeliculas(client) {
                 `;
             }),
         );
+        return{
+            createTable,
+            insertedPeliuclas
+        };
     }
     catch (error) {
 }

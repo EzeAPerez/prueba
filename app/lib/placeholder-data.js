@@ -51,4 +51,4 @@ const peliculas = [
     "Interstellar"
   ];
 
-  module.exports = {peliculas}
+  module.exports = {peliculas};
