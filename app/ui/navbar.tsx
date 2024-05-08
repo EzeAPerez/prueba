@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link"
-import { SearchIcon, ShoppingCartIcon, UserIcon } from "@/app/ui/icon"
+import { SearchIcon, ShoppingCartIcon, UserIcon } from "@/app/ui/icono"
 import {Button} from "./button"
 import { useState } from "react";
 
