@@ -1,5 +1,5 @@
 
-export function SearchIcon() {
+export default function SearchIcon() {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +78,7 @@ export function ChevronLeftIcon() {
   }
   
   
-export  function ChevronRightIcon() {
+export function ChevronRightIcon() {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
