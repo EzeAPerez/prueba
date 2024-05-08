@@ -1,5 +1,5 @@
 import { Button } from "@/app/ui/button"
-import { fetchPelicula } from "@/app/lib/data"
+import { fetchUnaPelicula } from "@/app/lib/data"
 
 interface InfoProductoPelicula {
     titulo: string
@@ -7,7 +7,7 @@ interface InfoProductoPelicula {
 
 export default async function InfoProducto({ titulo }: InfoProductoPelicula){
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    const data = await fetchPelicula(titulo);
+    const data = await fetchUnaPelicula(titulo);
     if (!data) {
         throw new Error('Failed to fetch invoice.');
     }else{
@@ -15,7 +15,7 @@ export default async function InfoProducto({ titulo }: InfoProductoPelicula){
             <>
                 <div className="grid gap-4 md:gap-10 items-start">
                     <img
-                        alt={data?.titulo}
+                        alt={data?.title}
                         className="aspect-[2/3] object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
                         height={900}
                         src={data?.poster}
@@ -24,7 +24,7 @@ export default async function InfoProducto({ titulo }: InfoProductoPelicula){
                 </div>
                 <div className="grid gap-4 md:gap-10 items-start dark:text-white">
                     <div className="grid gap-4">
-                        <h1 className="font-bold text-3xl lg:text-4xl">{data?.titulo}</h1>
+                        <h1 className="font-bold text-3xl lg:text-4xl">{data?.title}</h1>
                         <div>
                             <p>
                                 {data?.plot}

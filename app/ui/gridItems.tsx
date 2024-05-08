@@ -31,7 +31,7 @@ export async function GridItem({ titulo } : GridItemProps) {
       <div className="mt-4 p-4">
         <h3 className="text-lg font-semibold tracking-tight">
           <Link className="hover:underline" href="./infoProducto">
-            {data?.titulo}
+            {data?.title}
           </Link>
         </h3>
         <p className="text-sm text-gray-500 dark:text-gray-400">
