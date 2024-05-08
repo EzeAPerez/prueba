@@ -1,28 +1,19 @@
 import { Button } from "@/app/ui/button"
 import Link from "next/link"
-import { fetchPelicula } from "@/app/lib/data"
-
-const titulos: string[] = [
-    "The Godfather",
-    "Titanic",
-    "The Lord of the Rings: The Return of the King",
-    "Schindler's List",
-    "Forrest Gump",
-    "Pulp Fiction",
-    "The Lion King",
-    "Fight Club",
-    "Interstellar",
-    "La La Land",
-    "Inception",
-    "The Shawshank Redemption"
-];
+import { fetchUnaPelicula } from "@/app/lib/data"
 
 interface ProductoPelicula {
     titulo: string
 }
 
+const titulos = [
+    "Batman",
+    "Spiderman",
+    "Superman"
+];
+
 async function Product({ titulo }: ProductoPelicula) {
-    const data = await fetchPelicula(titulo);
+    const data = await fetchUnaPelicula(titulo);
         return (
             /*agregar mapeo para todos los productos, o una cantidad. */
             <div className="bg-white rounded-lg overflow-hidden shadow-md dark:bg-gray-800 dark:text-gray-200">
@@ -31,7 +22,7 @@ async function Product({ titulo }: ProductoPelicula) {
                             alt={titulo}
                             className="w-full h-60 object-cover"
                             height="300"
-                            src={data?.poster}
+                            src={data.poster}
                             style={{
                                 aspectRatio: "400/300",
                                 objectFit: "cover",
