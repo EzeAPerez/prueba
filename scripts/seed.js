@@ -1,13 +1,66 @@
 const { db } = require('@vercel/postgres');
 
-const { peliculas }= require('../app/lib/placeholder-data');
-var key="6d7434b2";
+const peliculas = [
+    "The Godfather",
+    "Titanic",
+    "The Shawshank Redemption",
+    "Pulp Fiction",
+    "Forrest Gump",
+    "The Dark Knight",
+    "Schindler's List",
+    "Inception",
+    "The Matrix",
+    "The Lord of the Rings: The Fellowship of the Ring",
+    "Fight Club",
+    "Star Wars: Episode IV - A New Hope",
+    "The Silence of the Lambs",
+    "The Lion King",
+    "Gladiator",
+    "Back to the Future",
+    "The Green Mile",
+    "The Godfather: Part II",
+    "The Departed",
+    "Saving Private Ryan",
+    "The Shawshank Redemption",
+    "The Dark Knight Rises",
+    "The Lord of the Rings: The Return of the King",
+    "The Lord of the Rings: The Two Towers",
+    "Forrest Gump",
+    "The Avengers",
+    "Jurassic Park",
+    "Avatar",
+    "The Great Gatsby",
+    "Inglourious Basterds",
+    "The Departed",
+    "The Wolf of Wall Street",
+    "The Grand Budapest Hotel",
+    "Gone with the Wind",
+    "Casablanca",
+    "The Wizard of Oz",
+    "Psycho",
+    "The Shining",
+    "Goodfellas",
+    "Fight Club",
+    "Inception",
+    "The Usual Suspects",
+    "The Terminator",
+    "Alien",
+    "The Godfather: Part III",
+    "The Green Mile",
+    "The Sixth Sense",
+    "Schindler's List",
+    "The Matrix",
+    "Interstellar"
+  ];
+
 
 async function seedPeliculas(client) {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
     try {
         const createTable = await client.sql`
         CREATE TABLE IF NOT EXISTS peliculas (
-          name VARCHAR(255) NOT NULL,
+          title VARCHAR(255) PRIMARY KEY NOT NULL,
           year VARCHAR(255) NOT NULL,
           poster VARCHAR(255) NOT NULL,
           plot VARCHAR(255) NOT NULL,
@@ -18,13 +71,17 @@ async function seedPeliculas(client) {
           actors VARCHAR(255) NOT NULL
         );`;
 
+        console.log(`Created "users" table`);
+
         const insertedPeliuclas = await Promise.all(
-            peliculas.map((pelicula) => {
-                datosPelicula = fetchPelicula(pelicula);
-                client.sql`
-                    INSERT INTO peliculas (name, year, poster, plot, runtime, genere, duration, director, actors)
-                    VALUES (${pelicula.name}, ${pelicula.year}, ${pelicula.poster}, ${pelicula.plot}, ${pelicula.runtime}, ${pelicula.genere}, ${pelicula.duration}, ${pelicula.director}, ${pelicula.actors})
-                    ON CONFLICT (id) DO NOTHING;
+            peliculas.map(async (pelicula) => {
+                console.log(`Inserting ${pelicula}`);
+                const datosPelicula = await fetchPelicula(pelicula);
+                console.log(`Inserting 2 ${datosPelicula.title}`);
+                return client.sql`
+                    INSERT INTO peliculas (title, year, poster, plot, runtime, genere, duration, director, actors)
+                    VALUES (${datosPelicula.title}, ${datosPelicula.year}, ${datosPelicula.poster}, ${datosPelicula.plot}, ${datosPelicula.runtime}, ${datosPelicula.genere}, ${datosPelicula.duration}, ${datosPelicula.director}, ${datosPelicula.actors})
+                    ON CONFLICT (title) DO NOTHING;
                 `;
             }),
         );
@@ -34,20 +91,23 @@ async function seedPeliculas(client) {
         };
     }
     catch (error) {
+        console.error('Error:', error);
 }
 }
 
-function fetchPelicula(titulo){
+async function fetchPelicula(titulo){
+    var key="6d7434b2";
     var url="http://www.omdbapi.com/?apikey="+key+"&t="+titulo;
     try {
-        const response = fetch(url);
+        console.log('Fetching revenue data...');
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error('Failed to fetch pelicula.');
         }
-        const data = response.json();
+        const data = await response.json();
         return {
-            titulo: data.Title,
-            year: parseInt(data.Year),
+            title: data.Title,
+            year: data.Year,
             poster: data.Poster,
             plot: data.Plot,
             runtime: data.Runtime,

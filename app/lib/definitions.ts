@@ -1,5 +1,5 @@
 export type Peliculas = {
-    titulo: string;
+    title: string;
     year: number;
     poster: string;
     plot: string;

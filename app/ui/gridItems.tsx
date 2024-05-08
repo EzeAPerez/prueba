@@ -1,7 +1,7 @@
 import Link from "next/link"
 import React from 'react';
 import { Button } from "./button"
-import { fetchPelicula } from "@/app/lib/data"
+import { fetchUnaPelicula } from "@/app/lib/data"
 
 interface GridItemProps {
   titulo: string
@@ -9,7 +9,7 @@ interface GridItemProps {
 
 export async function GridItem({ titulo } : GridItemProps) {
   //await new Promise((resolve) => setTimeout(resolve, 3000));
-    const data = await fetchPelicula(titulo);
+    const data = await fetchUnaPelicula(titulo);
     if (!data) {
         throw new Error('Failed to fetch invoice.');
     }else{
@@ -51,7 +51,7 @@ export default async function Carousel() {
   
   return (
     <>
-      <GridItem titulo={"La La Land"} />
+      <GridItem titulo={"Interstellar"} />
       <GridItem titulo={"Forrest Gump"} />
       <GridItem titulo={"The Godfather"} />
     </>
