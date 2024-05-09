@@ -6,7 +6,7 @@ interface InfoProductoPelicula {
 }
 
 export default async function InfoProducto({ titulo }: InfoProductoPelicula){
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    titulo = titulo.replace("%20", " ");
     const data = await fetchUnaPelicula(titulo);
     if (!data) {
         throw new Error('Failed to fetch invoice.');

@@ -8,7 +8,6 @@ interface GridItemProps {
 }
 
 export async function GridItem({ titulo } : GridItemProps) {
-  //await new Promise((resolve) => setTimeout(resolve, 3000));
     const data = await fetchUnaPelicula(titulo);
     if (!data) {
         throw new Error('Failed to fetch invoice.');
