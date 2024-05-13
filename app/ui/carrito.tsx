@@ -54,7 +54,7 @@ export async function Carro() {
         {
         data?.map(async (titulo) => {
           const dataFilm = await fetchUnaPelicula(titulo);
-          return <CartItem film={dataFilm} />
+          return <CartItem key={dataFilm?.title} film={dataFilm} />
         })}
       </div>
       <div className="border-t border-gray-200 dark:border-gray-800 mt-6 pt-6">
