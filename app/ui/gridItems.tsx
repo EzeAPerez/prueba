@@ -50,7 +50,7 @@ export default async function Carousel() {
    return (
     <>
       {data?.map(async (film) => (
-        <GridItem data={film} /> 
+        <GridItem key={film?.title} data={film} /> 
       ))}
     </>
    )

@@ -65,7 +65,7 @@ export default async function ProductoCard({
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 md:px-6">
             {
             data.map(async (peliculas) => (
-                <Product pelicula={peliculas}/>
+                <Product key={peliculas.title} pelicula={peliculas}/>
             )) 
             }
         </div>
