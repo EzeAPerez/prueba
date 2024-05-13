@@ -1,22 +1,19 @@
 import Link from "next/link"
 import React from 'react';
-import { Button } from "./button"
-import { fetchUnaPelicula } from "@/app/lib/data"
+import { ButtonAddFilms } from "./button"
+import { fetchFilmsForGrid } from "@/app/lib/data"
+import { Peliculas } from "@/app/lib/definitions"
 
 interface GridItemProps {
-  titulo: string
+  data: Peliculas
 }
 
-export async function GridItem({ titulo } : GridItemProps) {
-    const data = await fetchUnaPelicula(titulo);
-    if (!data) {
-        throw new Error('Failed to fetch invoice.');
-    }else{
+async function GridItem({ data } : GridItemProps) {
   return (
     <div className="rounded-lg overflow-hidden shadow-2xl dark:bg-gray-800 dark:text-gray-200">
-      <Link className="block" href={`./${titulo}/infoProducto`}>
+      <Link className="block" href={`./${data?.title}/infoProducto`}>
         <img
-          alt={titulo}
+          alt={data.title}
           className="w-full h-[500px] object-cover"
           height={600}
           src={data?.poster}
@@ -29,31 +26,33 @@ export async function GridItem({ titulo } : GridItemProps) {
       </Link>
       <div className="mt-4 p-4">
         <h3 className="text-lg font-semibold tracking-tight">
-          <Link className="hover:underline" href="./infoProducto">
+          <Link className="hover:underline" href={`./${data?.title}/infoProducto`}>
             {data?.title}
           </Link>
         </h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-gray-600 dark:text-gray-300">
           {data?.genere} - {data?.year}
         </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          {data?.plot}
+        </p>
         <div className="flex items-center justify-between py-4">
-                    <span className="font-semibold text-lg">$99.99</span>
-                    <Button>Add to Cart</Button>
+                    <span className="font-semibold text-lg">${data?.price}</span>
+                    <ButtonAddFilms films={data?.title} />
                 </div>
       </div>
     </div>
   )
 }
-}
 
 export default async function Carousel() {
-  
-  return (
+  const data = await fetchFilmsForGrid();
+   return (
     <>
-      <GridItem titulo={"Interstellar"} />
-      <GridItem titulo={"Forrest Gump"} />
-      <GridItem titulo={"The Godfather"} />
+      {data?.map(async (film) => (
+        <GridItem data={film} /> 
+      ))}
     </>
-  );
+   )
 };
 

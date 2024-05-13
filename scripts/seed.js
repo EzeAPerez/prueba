@@ -66,21 +66,20 @@ async function seedPeliculas(client) {
           plot VARCHAR(255) NOT NULL,
           runtime VARCHAR(255) NOT NULL,
           genere VARCHAR(255) NOT NULL,
-          duration VARCHAR(255) NOT NULL,
           director VARCHAR(255) NOT NULL,
-          actors VARCHAR(255) NOT NULL
+          actors VARCHAR(255) NOT NULL,
+          price SMALLINT NOT NULL
         );`;
 
         console.log(`Created "users" table`);
-
         const insertedPeliuclas = await Promise.all(
             peliculas.map(async (pelicula) => {
                 console.log(`Inserting ${pelicula}`);
                 const datosPelicula = await fetchPelicula(pelicula);
                 console.log(`Inserting 2 ${datosPelicula.title}`);
                 return client.sql`
-                    INSERT INTO peliculas (title, year, poster, plot, runtime, genere, duration, director, actors)
-                    VALUES (${datosPelicula.title}, ${datosPelicula.year}, ${datosPelicula.poster}, ${datosPelicula.plot}, ${datosPelicula.runtime}, ${datosPelicula.genere}, ${datosPelicula.duration}, ${datosPelicula.director}, ${datosPelicula.actors})
+                    INSERT INTO peliculas (title, year, poster, plot, runtime, genere, director, actors, price)
+                    VALUES (${datosPelicula.title}, ${datosPelicula.year}, ${datosPelicula.poster}, ${datosPelicula.plot}, ${datosPelicula.runtime}, ${datosPelicula.genere}, ${datosPelicula.director}, ${datosPelicula.actors}, ${datosPelicula.price})
                     ON CONFLICT (title) DO NOTHING;
                 `;
             }),
@@ -104,6 +103,7 @@ async function fetchPelicula(titulo){
         if (!response.ok) {
             throw new Error('Failed to fetch pelicula.');
         }
+        var numeroAleatorio = Math.floor(Math.random() * 30) + 1;
         const data = await response.json();
         return {
             title: data.Title,
@@ -112,9 +112,9 @@ async function fetchPelicula(titulo){
             plot: data.Plot,
             runtime: data.Runtime,
             genere: data.Genre,
-            duration: data.Runtime,
             director: data.Director,
-            actors: data.Actors
+            actors: data.Actors,
+            price: numeroAleatorio
         };
     } catch (error) {
         throw new Error('Failed to fetch pelicula.');

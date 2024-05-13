@@ -1,6 +1,7 @@
-'use client'
-import Link from "next/link"
-import { SearchIcon, ShoppingCartIcon, UserIcon } from "@/app/ui/icono"
+'use client';
+import Link from "next/link";
+import Search from '@/app/ui/search';
+import {ShoppingCartIcon, UserIcon } from "@/app/ui/icono"
 import {Button} from "./button"
 import { useState } from "react";
 
@@ -12,73 +13,51 @@ export default function Component() {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full flex h-16 items-center justify-between px-4 md:px-6 bg-white shadow dark:bg-gray-800 dark:text-white ">
-      <Link className="flex items-center gap-2" href="/">
-        <span className="font-semibold text-lg">Acme Store</span>
-      </Link>
-      <nav className="hidden md:flex items-center gap-6">
-        <Link className="font-medium hover:text-gray-900 dark:hover:text-gray-400" href="/productos">
-          Men
-        </Link>
-        <Link className="font-medium hover:text-gray-900 dark:hover:text-gray-400" href="#">
-          Women
-        </Link>
-        <Link className="font-medium hover:text-gray-900 dark:hover:text-gray-400" href="#">
-          Kids
-        </Link>
-        <Link className="font-medium hover:text-gray-900 dark:hover:text-gray-400" href="#">
-          Home
-        </Link>
-        <Link className="font-medium hover:text-gray-900 dark:hover:text-gray-400" href="#">
-          Beauty
-        </Link>
-      </nav>
+    <header className="fixed top-0 flex h-16 w-full items-center justify-between px-4 md:px-6 bg-gray-800 text-white gap-4">
       <div className="flex items-center gap-4">
-        <Link className="hover:text-gray-900 dark:hover:text-gray-400" href="#">
-          <SearchIcon/>
-          <span className="sr-only">Search</span>
+        <Link className="" href="/">
+          <span className="font-semibold text-lg">Acme Store</span>
         </Link>
+        <div className="hidden md:flex gap-4">
+          <Link className="dark:hover:text-gray-400" href="/productos">
+            <span className="">Films</span>
+          </Link>
+         <Link className="dark:hover:text-gray-400" href="/productos">
+            <span className="">Series</span>
+          </Link>
+        </div>
+      </div>
+      <div className="flex items-center justify-end gap-4 md:gap-6">
+        <div className="flex-1 max-w-md gap-4 flex items-center justify-center">
+            <Search placeholder="Search films..." />
+            <span className="sr-only">Search</span>
+        </div>
         <Link className="hover:text-gray-900 dark:hover:text-gray-400" href="#">
         <UserIcon/>
           <span className="sr-only">Account</span>
         </Link>
-        <Link className="hover:text-gray-900 dark:hover:text-gray-400" href="#">
+        <Link className="hover:text-gray-900 dark:hover:text-gray-400" href="/carrito">
         <ShoppingCartIcon/>
           <span className="sr-only">Cart</span>
         </Link>
       </div>
       <div className="md:hidden">
-      <Button onClick={toggleMenu}>
-        <MenuIcon />
-        <span className="sr-only">Toggle navigation menu</span>
-      </Button>
-      {isOpen && (
-        <nav className="absolute top-16 left-0 w-full bg-white shadow dark:bg-gray-800 dark:text-white">
-          <ul className="flex flex-col gap-4 p-4">
-            <li>
-              <Link className="font-medium hover:text-gray-900 dark:hover:text-gray-400" href="/productos">
-                Men
-              </Link>
-            </li>
-            <li>
-              <Link className="font-medium hover:text-gray-900 dark:hover:text-gray-400" href="#">
-                Women
-              </Link>
-            </li>
-            <li>
-              <Link className="font-medium hover:text-gray-900 dark:hover:text-gray-400" href="#">
-                Kids
-              </Link>
-            </li>
-            <li>
-              <Link className="font-medium hover:text-gray-900 dark:hover:text-gray-400" href="#">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link className="font-medium hover:text-gray-900 dark:hover:text-gray-400" href="#">
-                Beauty
-              </Link>
+        <Button onClick={toggleMenu}>
+          <MenuIcon />
+          <span className="sr-only">Toggle navigation menu</span>
+        </Button>
+        {isOpen && (
+          <nav className="absolute top-16 left-0 w-full bg-white shadow border border-gray-700 dark:bg-gray-800 dark:text-white">
+            <ul className="flex w-full flex-col gap-4 p-4">
+              <li>
+                <Link className=" dark:hover:text-gray-400" href="/productos">
+                  <span className="">Films</span>
+                </Link>
+              </li>
+              <li>
+                <Link className="w-full dark:hover:text-gray-400" href="/productos">
+                  <span className="">Series</span>
+                </Link>
             </li>
           </ul>
         </nav>
@@ -88,6 +67,7 @@ export default function Component() {
     </header>
   )
 }
+
 function MenuIcon() {
   return (
     <svg

@@ -16,7 +16,9 @@ export default function Layout({ children }: Readonly<{
     <html lang="en">
       <body className={`${inter.variable} bg-white dark:bg-gray-900`}>
         <Navbar/>
-        {children}
+        <div className='py-20'>
+          {children}
+        </div>
         <Footer/>
       </body>
     </html>

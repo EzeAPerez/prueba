@@ -8,4 +8,5 @@ export type Peliculas = {
     duration: string; 
     director: string;
     actors: string;
+    price: number;
   };

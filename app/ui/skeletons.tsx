@@ -21,7 +21,7 @@ export function CardSkeleton() {
 
 export function ProductCardSkeleton() {
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 md:px-6 py-16">
+    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 md:px-6">
       <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton />

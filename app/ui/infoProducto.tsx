@@ -1,4 +1,4 @@
-import { Button } from "@/app/ui/button"
+import { Button, ButtonAddFilms } from "@/app/ui/button"
 import { fetchUnaPelicula } from "@/app/lib/data"
 
 interface InfoProductoPelicula {
@@ -6,10 +6,11 @@ interface InfoProductoPelicula {
 }
 
 export default async function InfoProducto({ titulo }: InfoProductoPelicula){
-    titulo = titulo.replace("%20", " ");
-    const data = await fetchUnaPelicula(titulo);
+    const title = titulo.replace(/%20/g, " ");
+    const data = await fetchUnaPelicula(title);
+    console.log(title);
     if (!data) {
-        throw new Error('Failed to fetch invoice.');
+        throw new Error('Failed to fetch.');
     }else{
         return (
             <>
@@ -31,14 +32,11 @@ export default async function InfoProducto({ titulo }: InfoProductoPelicula){
                             </p>
                         </div>
                         <div className="flex items-center gap-4">
-                            <div className="text-4xl font-bold">$79.99</div>
+                            <div className="text-4xl font-bold">${data?.price}</div>
                         </div>
                     </div>
-                    <form className="grid gap-4 md:gap-10">
-                        <Button className="w-full">
-                            Add to Cart
-                        </Button>
-                    </form>
+                    
+                        <ButtonAddFilms films={data?.title}/>
     
                     <div className="grid gap-4 text-sm leading-loose">
                         <h2 className="font-bold text-lg">Details</h2>
