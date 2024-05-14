@@ -15,15 +15,15 @@ export default function Component() {
   return (
     <header className="fixed top-0 flex h-16 w-full items-center justify-between px-4 md:px-6 bg-gray-800 text-white gap-4">
       <div className="flex items-center gap-4">
-        <Link className="" href="/">
+        <Link href="/">
           <span className="font-semibold text-lg">Acme Store</span>
         </Link>
         <div className="hidden md:flex gap-4">
           <Link className="dark:hover:text-gray-400" href="/productos">
-            <span className="">Films</span>
+            <span>Films</span>
           </Link>
          <Link className="dark:hover:text-gray-400" href="/productos">
-            <span className="">Series</span>
+            <span>Series</span>
           </Link>
         </div>
       </div>

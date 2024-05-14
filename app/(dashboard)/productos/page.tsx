@@ -3,7 +3,6 @@ import Pagination from '@/app/ui/pagination';
 import { ProductCardSkeleton } from "@/app/ui/skeletons"
 import { Suspense } from 'react';
 import { fetchFilmsTotalPages } from '@/app/lib/data';
-import { Filters } from "@/app/ui/filters";
 
 
 export default async function Component({
