@@ -1,6 +1,7 @@
 import { ButtonAddFilms } from "@/app/ui/button"
 import { fetchUnaPelicula } from "@/app/lib/dataFilms"
 import {fetchUnaserie} from "@/app/lib/dataSeries"
+import Image from "next/image"
 
 interface InfoProductoTitle {
     titulo: string
@@ -20,7 +21,7 @@ export default async function InfoProducto({ titulo }: InfoProductoTitle){
         return (
             <>
                 <div className="grid gap-4 md:gap-10 items-start">
-                    <img
+                    <Image
                         alt={data?.title}
                         className="aspect-[2/3] object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
                         height={900}

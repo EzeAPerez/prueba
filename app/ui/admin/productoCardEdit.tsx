@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { fetchFilteredFilms } from "@/app/lib/dataFilms"
 import { Producto } from "@/app/lib/definitions"
+import Image from "next/image"
 
 interface ProductItemProps {
     pelicula: Producto
@@ -12,7 +13,7 @@ async function ProductEdit({pelicula}: ProductItemProps){
             /*agregar mapeo para todos los productos, o una cantidad. */
             <div className="bg-white rounded-lg overflow-hidden shadow-md dark:bg-gray-800 dark:text-gray-200">
                     <Link className="block" href={`./movies/${pelicula?.title}/infoEditProducto`}>
-                        <img
+                        <Image
                             alt={pelicula.title}
                             className="w-full h-60 object-cover"
                             height="300"

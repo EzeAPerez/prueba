@@ -6,12 +6,13 @@ import { deleteToCart } from "../lib/actions"
 import { Producto } from "../lib/definitions";
 import { fetchUnaserie } from "../lib/dataSeries";
 import { Button } from "./button";
+import Image from "next/image";
 
 async function CartItem({producto}:{producto: Producto}) {
     const deleteFilmsToCart = deleteToCart.bind(null, producto.title);
     return(
         <div className="grid grid-cols-[80px_1fr_80px] items-center gap-4">
-          <img
+          <Image
             alt={producto?.title}
             className="rounded-md"
             height={80}

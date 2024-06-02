@@ -2,17 +2,18 @@ import Link from "next/link"
 import React from 'react';
 import { ButtonAddFilms } from "./button"
 import { fetchFilmsForGrid } from "@/app/lib/dataFilms"
-import { Peliculas } from "@/app/lib/definitions"
+import { Producto } from "@/app/lib/definitions"
+import Image from "next/image";
 
 interface GridItemProps {
-  data: Peliculas
+  data: Producto
 }
 
 export async function GridItem({ data } : GridItemProps) {
   return (
     <div className="rounded-lg overflow-hidden shadow-2xl bg-gray-800 text-gray-200">
       <Link className="block" href={`./${data?.title}/infoProducto`}>
-        <img
+        <Image
           alt={data.title}
           className="w-full h-[500px] object-cover"
           height={600}

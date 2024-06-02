@@ -3,6 +3,7 @@ import Link from "next/link"
 import {fetchFilteredFilms } from "@/app/lib/dataFilms"
 import { fetchFilteredSeries } from "@/app/lib/dataSeries"
 import { Producto } from "@/app/lib/definitions"
+import Image from "next/image"
 
 interface ProductItemProps {
     producto: Producto
@@ -14,7 +15,7 @@ async function Product({producto}: ProductItemProps){
             /*agregar mapeo para todos los productos, o una cantidad. */
             <div className="rounded-lg overflow-hidden shadow bg-gray-800 text-gray-200 hover:shadow-xl hover:shadow-slate-700 ">
                     <Link className="block" href={`./${producto?.title}/infoProducto`}>
-                        <img
+                        <Image
                             alt={producto.title}
                             className="w-full h-60 object-cover"
                             height="300"
