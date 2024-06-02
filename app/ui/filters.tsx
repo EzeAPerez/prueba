@@ -23,12 +23,6 @@ export async function Filters() {
         {isOpen && (
           <nav className="absolute z-10 w-64 shadow rounder rounded-lg border border-gray-200 bg-gray-900">
             <ul className="text-white flex w-full flex-col gap-4 p-4">
-          
-              {/*data?.map((item) => (
-                    <li>
-                        <Link key={`${item}`} href={`./${item}/productos`}>item</Link>
-                    </li>
-                ))*/}
             </ul>
             </nav>
         )}
