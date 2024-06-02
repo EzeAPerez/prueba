@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { ShoppingCartIcon, UserIcon } from "@/app/ui/icono"
 import { Button } from "../button"
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Search from "../search"
 
 export default function AdminPage() {
@@ -44,7 +44,9 @@ export default function AdminPage() {
         </div>
       </div>
       <div className="flex-1 max-w-sm gap-4 flex items-center justify-center">
+        <Suspense>
           <Search placeholder="Search..." />
+        </Suspense>
       </div>
       <div className="md:hidden">
         <Button onClick={toggleMenu}>

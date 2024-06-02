@@ -3,7 +3,7 @@ import Link from "next/link";
 import Search from '@/app/ui/search';
 import {ShoppingCartIcon, UserIcon } from "@/app/ui/icono"
 import {Button} from "./button"
-import {useState } from "react";
+import {Suspense, useState } from "react";
 
 export default function Component() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +29,9 @@ export default function Component() {
       </div>
       <div className="flex items-center justify-end gap-4 md:gap-6">
         <div className="flex-1 max-w-md gap-4 flex items-center justify-center">
-          <Search placeholder="Search..." />
+          <Suspense>
+            <Search placeholder="Search..." />
+          </Suspense>
         </div>
         <Link className="hover:text-gray-400" href="/user">
         <UserIcon/>
