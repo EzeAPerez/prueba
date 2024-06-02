@@ -13,7 +13,7 @@ async function CartItem({producto}:{producto: Producto}) {
     return(
         <div className="grid grid-cols-[80px_1fr_80px] items-center gap-4">
           <Image
-            alt={producto?.title}
+            alt={producto.title}
             className="rounded-md"
             height={80}
             src={producto.poster}
