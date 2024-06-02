@@ -3,7 +3,6 @@ import { cookies } from 'next/headers'
 import { sql } from '@vercel/postgres';
 import { Producto } from "./definitions"
 import { unstable_noStore as noStore } from 'next/cache';
-import { Series } from '../ui/user/series';
 
 var key="6d7434b2";
 
