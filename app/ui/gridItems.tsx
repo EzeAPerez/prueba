@@ -1,16 +1,16 @@
 import Link from "next/link"
 import React from 'react';
 import { ButtonAddFilms } from "./button"
-import { fetchFilmsForGrid } from "@/app/lib/data"
+import { fetchFilmsForGrid } from "@/app/lib/dataFilms"
 import { Peliculas } from "@/app/lib/definitions"
 
 interface GridItemProps {
   data: Peliculas
 }
 
-async function GridItem({ data } : GridItemProps) {
+export async function GridItem({ data } : GridItemProps) {
   return (
-    <div className="rounded-lg overflow-hidden shadow-2xl dark:bg-gray-800 dark:text-gray-200">
+    <div className="rounded-lg overflow-hidden shadow-2xl bg-gray-800 text-gray-200">
       <Link className="block" href={`./${data?.title}/infoProducto`}>
         <img
           alt={data.title}
@@ -30,10 +30,10 @@ async function GridItem({ data } : GridItemProps) {
             {data?.title}
           </Link>
         </h3>
-        <p className="text-sm text-gray-600 dark:text-gray-300">
+        <p className="text-sm text-gray-300">
           {data?.genere} - {data?.year}
         </p>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-gray-400">
           {data?.plot}
         </p>
         <div className="flex items-center justify-between py-4">
@@ -52,6 +52,7 @@ export default async function Carousel() {
       {data?.map(async (film) => (
         <GridItem key={film?.title} data={film} /> 
       ))}
+      
     </>
    )
 };

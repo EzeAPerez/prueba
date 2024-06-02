@@ -1,14 +1,19 @@
-import { Button, ButtonAddFilms } from "@/app/ui/button"
-import { fetchUnaPelicula } from "@/app/lib/data"
+import { ButtonAddFilms } from "@/app/ui/button"
+import { fetchUnaPelicula } from "@/app/lib/dataFilms"
+import {fetchUnaserie} from "@/app/lib/dataSeries"
 
-interface InfoProductoPelicula {
+interface InfoProductoTitle {
     titulo: string
 }
 
-export default async function InfoProducto({ titulo }: InfoProductoPelicula){
+export default async function InfoProducto({ titulo }: InfoProductoTitle){
     const title = titulo.replace(/%20/g, " ");
-    const data = await fetchUnaPelicula(title);
-    console.log(title);
+    let data;
+    try{
+        data = await fetchUnaPelicula(title);
+    }catch{
+        data = await fetchUnaserie(title);
+    }
     if (!data) {
         throw new Error('Failed to fetch.');
     }else{
@@ -47,11 +52,13 @@ export default async function InfoProducto({ titulo }: InfoProductoPelicula){
                             </li>
                             <li>
                                 <span className="font-medium">Duration: </span>
-                                {data?.duration}{"\n                    "}
+                                {data?.runtime}{"\n                    "}
                             </li>
                             <li>
                                 <span className="font-medium">Director: </span>
-                                {data?.director}{"\n                    "}
+                                {
+                                    data?.type === "pelicula" ? data?.director : data?.writer
+                                }{"\n                    "}
                             </li>
                             <li>
                                 <span className="font-medium">Actors: </span>

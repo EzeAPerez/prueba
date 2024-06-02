@@ -3,8 +3,8 @@ const shimmer =
 
 export function CardSkeleton() {
   return (
-    <div className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-100 shadow-sm dark:bg-gray-800`}>
-      <div className="bg-white rounded-lg overflow-hidden shadow-md dark:bg-gray-800 dark:text-gray-200">
+    <div className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-800`}>
+      <div className="rounded-lg overflow-hidden shadow-md bg-gray-800">
         <div className="w-full h-60 bg-gray-300 animate-pulse"></div>
         <div className="p-6 space-y-2">
           <div className="mt-2 h-4 w-20 rounded-md bg-gray-400 animate-pulse" />
@@ -21,7 +21,7 @@ export function CardSkeleton() {
 
 export function ProductCardSkeleton() {
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 md:px-6">
+    <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 md:px-6">
       <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton />
@@ -36,7 +36,7 @@ export function ProductCardSkeleton() {
 
 function GridSkeletonItem() {
   return (
-    <div className="rounded-lg overflow-hidden shadow-lg dark:bg-gray-800 dark:text-gray-200">
+    <div className="rounded-lg overflow-hidden shadow-lg bg-gray-800 text-gray-200">
       <div className="w-full h-[500px] object-cover bg-gray-300 animate-pulse rounded-lg"></div>
       <div className="mt-4 p-4 animate-pulse">
       <div className="mt-2 h-4 w-20 rounded-md bg-gray-400 animate-pulse" />

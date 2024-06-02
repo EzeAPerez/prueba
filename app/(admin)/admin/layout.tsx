@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google'
-import './globals.css'
+import {Footer} from "@/app/ui/footer"
+import AdminHeader from "@/app/ui/admin/adminHeader"
 
 const inter = Inter({
   subsets: ['latin'],
@@ -11,12 +12,12 @@ export default function Layout({ children }: Readonly<{
   children: React.ReactNode;
 }>)  {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} h-screen relative`}>
-        <div>
+      <div className={`${inter.variable} bg-white dark:bg-gray-900`}>
+        <AdminHeader />
+        <div className='py-20 p-4 '>
           {children}
         </div>
-      </body>
-    </html>
+        <Footer />
+      </div>
   )
 }

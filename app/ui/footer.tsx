@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-12 md:py-16 bg-white dark:bg-gray-900">
+    <footer className="bg-gray-900 text-white py-12 md:py-16 bg-white dark:bg-gray-900 inset-0 bg-gradient-to-t from-black/80 to-transparent">
       <div className="hidden md:grid container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-gray-500 dark:text-gray-400">
         <div>
           <h3 className="text-xl font-bold mb-4 text-black dark:text-white">Acme Inc.</h3>

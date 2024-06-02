@@ -1,3 +1,4 @@
+'use client';
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
@@ -5,8 +6,14 @@ import { useDebouncedCallback } from 'use-debounce';
 
 export default function Search({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
-  const pathname ="/productos";// usePathname();
+  let pathname = usePathname();
   const { replace } = useRouter();
+
+  switch(pathname){
+    case "/": pathname="/productos"; break;
+    case "/admin": pathname="/admin/movies"; break;
+    default: break;
+  }
 
   const handleSearch = useDebouncedCallback((term) => {
     const params = new URLSearchParams(searchParams);
@@ -20,12 +27,12 @@ export default function Search({ placeholder }: { placeholder: string }) {
   }, 300);
 
   return (
-    <div className="relative flex flex-1 flex-shrink-0">
+    <div className="relative flex flex-1">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
       <input
-        className="peer block w-full rounded-md bg-gray-800 border border-gray-300 py-[9px] pl-10 text-sm outline-2 text-white placeholder:text-gray-300"
+        className="peer block w-full rounded-md bg-gray-800 border border-gray-300 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-300"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
