@@ -11,7 +11,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   switch(pathname){
     case "/": pathname="/productos"; break;
-    case "/admin": pathname="/admin/movies"; break;
+    case "/admin": pathname="/admin/productos"; break;
     default: break;
   }
 

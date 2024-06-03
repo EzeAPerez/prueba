@@ -36,23 +36,15 @@ const series = [
 const peliculas = [
     "The Godfather",
     "Titanic",
-    "The Shawshank Redemption",
     "Pulp Fiction",
-    "Forrest Gump",
     "The Dark Knight",
-    "Schindler's List",
-    "Inception",
-    "The Matrix",
     "The Lord of the Rings: The Fellowship of the Ring",
-    "Fight Club",
     "Star Wars: Episode IV - A New Hope",
     "The Silence of the Lambs",
     "The Lion King",
     "Gladiator",
     "Back to the Future",
-    "The Green Mile",
     "The Godfather: Part II",
-    "The Departed",
     "Saving Private Ryan",
     "The Shawshank Redemption",
     "The Dark Knight Rises",
@@ -160,7 +152,8 @@ async function seedPeliculas(client) {
           genere VARCHAR(255) NOT NULL,
           director VARCHAR(255) NOT NULL,
           actors VARCHAR(255) NOT NULL,
-          price SMALLINT NOT NULL
+          price SMALLINT NOT NULL,
+          disable BOOLEAN NOT NULL DEFAULT FALSE
         );`;
 
         console.log(`Created "users" table`);
@@ -229,7 +222,8 @@ async function seedSeries(client) {
           writer VARCHAR(255) NOT NULL,
           actors VARCHAR(255) NOT NULL,
           totalSeasons SMALLINT,
-          price SMALLINT NOT NULL
+          price SMALLINT NOT NULL,
+          disable BOOLEAN NOT NULL DEFAULT FALSE
         );`;
 
         const insertedSeries = await Promise.all(
@@ -281,6 +275,9 @@ async function fetchSerie(titulo){
     }
 }
 
+async function seedTransactions(client) {
+    
+}
 async function main() {
     const client = await db.connect();
   

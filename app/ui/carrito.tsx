@@ -1,4 +1,3 @@
-
 import Link from "next/link"
 import {fetchUnaPelicula} from "../lib/dataFilms"
 import {listaEnCarrito, getTotalPrice} from "../lib/data"
@@ -10,8 +9,10 @@ import Image from "next/image";
 
 async function CartItem({producto}:{producto: Producto}) {
     const deleteFilmsToCart = deleteToCart.bind(null, producto.title);
+    if(producto===undefined){return <></>}
     return(
         <div className="grid grid-cols-[80px_1fr_80px] items-center gap-4">
+          <Link href={`/${producto.title}/infoProducto`}>
           <Image
             alt={producto.title}
             className="rounded-md"
@@ -23,8 +24,9 @@ async function CartItem({producto}:{producto: Producto}) {
             }}
             width={80}
           />
+          </Link>
           <div>
-            <h3 className="font-medium">{producto.title}</h3>
+            <Link className="font-medium hover:underline" href={`/${producto.title}/infoProducto`}>{producto.title}</Link>
             <p className="text-gray-400 text-sm">{producto.year}</p>
           </div>
           <div className="text-right">
@@ -61,10 +63,14 @@ export async function Carro() {
           //modificar!!!!!!!!!!!!
           try {
              dataFilm = await fetchUnaPelicula(titulo);
+             return <CartItem key={dataFilm?.title} producto={dataFilm} />
           } catch (error) {
-             dataFilm = await fetchUnaserie(titulo);
+            try{
+              dataFilm = await fetchUnaserie(titulo);
+              return <CartItem key={dataFilm?.title} producto={dataFilm} />
+            } catch (error) {
+            }
           }
-          return <CartItem key={dataFilm?.title} producto={dataFilm} />
         })}
       </div>
       <div className="border-t border-gray-800 mt-6 pt-6">

@@ -17,7 +17,7 @@ export async function fetchPeliculas() {
   
        console.log('Fetching revenue data...');
   
-      const data = await sql<Producto>`SELECT * FROM peliculas`;
+      const data = await sql<Producto>`SELECT * FROM peliculas WHERE disable = false`;
   
   
       return data.rows;
@@ -38,7 +38,7 @@ export async function fetchPeliculas() {
   
        console.log('Fetching revenue data...'+pelicula);
   
-      const data = await sql<Producto>`SELECT * FROM peliculas WHERE title ILIKE ${pelicula}`;
+      const data = await sql<Producto>`SELECT * FROM peliculas WHERE title ILIKE ${pelicula} AND disable = false`;
       data.rows[0].type="pelicula";
 
       return data.rows[0];
@@ -53,6 +53,7 @@ export async function fetchFilmsForGrid(){
   try{
     const data = await sql<Producto>`SELECT *
     FROM peliculas
+    WHERE disable = false
     ORDER BY year DESC
     LIMIT 3;`
     return data.rows;
@@ -76,11 +77,13 @@ export async function fetchFilteredFilms(
         *
       FROM peliculas
       WHERE
-        title ILIKE ${`%${query}%`} OR
-        year ILIKE ${`%${query}%`} OR
-        actors ILIKE ${`%${query}%`} OR
-        director ILIKE ${`%${query}%`} OR
-        genere ILIKE ${`%${query}%`}
+        disable = false AND (
+          title ILIKE ${`%${query}%`} OR
+          year ILIKE ${`%${query}%`} OR
+          actors ILIKE ${`%${query}%`} OR
+          director ILIKE ${`%${query}%`} OR
+          genere ILIKE ${`%${query}%`}
+        )
       ORDER BY year DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -98,10 +101,12 @@ export async function fetchFilmsTotalPages(query: string) {
     const count = await sql`SELECT COUNT(*)
     FROM peliculas
     WHERE
-      title ILIKE ${`%${query}%`} OR
-      year ILIKE ${`%${query}%`} OR
-      actors ILIKE ${`%${query}%`} OR
-      director ILIKE ${`%${query}%`}
+      disable = false AND (
+        title ILIKE ${`%${query}%`} OR
+        year ILIKE ${`%${query}%`} OR
+        actors ILIKE ${`%${query}%`} OR
+        director ILIKE ${`%${query}%`}
+      )
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
@@ -112,6 +117,19 @@ export async function fetchFilmsTotalPages(query: string) {
   }
 }
 
+export async function totalFilms(){
+  noStore();
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM peliculas 
+    WHERE disable = false
+    `;
+    return count.rows[0].count;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of peliculas.');
+  }
+}
 
 export async function obtenerMoviesFilters(){
   noStore();
@@ -121,25 +139,5 @@ export async function obtenerMoviesFilters(){
   }catch(error){
     console.error('Database Error:', error);
     throw new Error('Failed to fetch grid pelicula data.');
-  }
-}
-
-
-export async function updateMovie(movieData: Producto) {
-  noStore();
-  console.log(movieData);
-  try {
-    const update = await sql<Producto>`
-    UPDATE peliculas
-    SET year = ${movieData.year}, poster = ${movieData.poster}, runtime = ${movieData.runtime},
-        genere = ${movieData.genere}, director = ${movieData.director}, actors = ${movieData.actors},
-        price = ${movieData.price} 
-    WHERE id = ${movieData.id};
-  `;
-  console.log("Movie updated: " + movieData.title);
-  return update;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed update the movie.');
   }
 }

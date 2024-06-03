@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { Producto } from "@/app/lib/definitions";
-import { updateMovie } from "@/app/lib/dataFilms"; 
+import { updateMovie } from "@/app/lib/dataAdmin"; 
+import { updateSerie } from "@/app/lib/dataAdmin";
 import { useRouter } from 'next/navigation';
+import { ButtonDisabled } from '@/app/ui/button'
 
 interface ProductFormProps {
   movieData: Producto;
@@ -12,11 +14,11 @@ interface ProductFormProps {
 export default function ProductForm({ movieData }: ProductFormProps) {
   const [formData, setFormData] = useState({ ...movieData });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [id]: value,
+      [id]: id === 'disable' ? (value === 'true') : value,
     }));
   };
 
@@ -25,7 +27,8 @@ export default function ProductForm({ movieData }: ProductFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     //e.preventDefault();
     try {
-      await updateMovie(formData);
+      formData?.type === "pelicula" ? await updateMovie(formData): await updateSerie(formData);
+      
       alert('Movie updated successfully');
       router.push('/admin/movies');
     } catch (error) {
@@ -119,7 +122,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
               id="director"
               type="text"
-              value={formData.director}
+              value={formData?.type === "pelicula" ? formData?.director : formData?.writer}
               onChange={handleChange}
             />
           </div>
@@ -149,6 +152,22 @@ export default function ProductForm({ movieData }: ProductFormProps) {
               />
             </div>
           </div>
+          <div className="flex items-center justify-between">
+            <div> 
+              <label className="block font-medium mb-1" htmlFor="disable">
+                Disable
+              </label>
+              <select
+                className="bg-[#0B1120] border border-gray-200 rounded-md py-2 px-3 w-full focus:outline-none focus:ring focus:ring-[#4F46E5] dark:border-gray-800"
+                id="disable"
+                defaultValue={formData.disable.valueOf().toString()}
+                onChange={handleChange}
+              >
+                <option value="true">true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+          </div>
           <button
             type="submit"
             className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
@@ -157,6 +176,7 @@ export default function ProductForm({ movieData }: ProductFormProps) {
           </button>
         </form>
       </div>
+      
     </div>
   );
 }

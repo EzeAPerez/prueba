@@ -11,7 +11,7 @@ interface GridItemProps {
 
 export async function GridItem({ data } : GridItemProps) {
   return (
-    <div className="rounded-lg overflow-hidden shadow-2xl bg-gray-800 text-gray-200">
+    <div className="rounded-lg overflow-hidden shadow-2xl bg-gray-800 text-gray-200 shadow hover:shadow-xl hover:shadow-slate-700">
       <Link className="block" href={`./${data?.title}/infoProducto`}>
         <Image
           alt={data.title}
@@ -25,16 +25,16 @@ export async function GridItem({ data } : GridItemProps) {
           width={400}
         />
       </Link>
-      <div className="mt-4 p-4">
+      <div className="p-4">
         <h3 className="text-lg font-semibold tracking-tight">
           <Link className="hover:underline" href={`./${data?.title}/infoProducto`}>
             {data?.title}
           </Link>
         </h3>
-        <p className="text-sm text-gray-300">
+        <p className="text-sm text-gray-300 pt-2">
           {data?.genere} - {data?.year}
         </p>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm text-gray-400 pt-2">
           {data?.plot}
         </p>
         <div className="flex items-center justify-between py-4">

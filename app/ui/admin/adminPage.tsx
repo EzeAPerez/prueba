@@ -1,4 +1,9 @@
-export function AdminPage() {
+import { totalFilms } from "@/app/lib/dataFilms";
+import { totalSeries } from "@/app/lib/dataSeries"
+
+export async function AdminPage() {
+  const countSeries = await totalSeries();
+  const countFilms = await totalFilms();
 
   return (
       <div className="flex flex-col min-h-screen text-white">
@@ -7,14 +12,14 @@ export function AdminPage() {
             <div className="bg-gray-800 rounded-lg shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Total Movies</h2>
-                <span className="text-2xl font-bold">125</span>
+                <span className="text-2xl font-bold">{countFilms}</span>
               </div>
               <p className="text-gray-400">This is the total number of movies in your library.</p>
             </div>
             <div className="bg-gray-800 rounded-lg shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold">Total Series</h2>
-                <span className="text-2xl font-bold">78</span>
+                <span className="text-2xl font-bold">{countSeries}</span>
               </div>
               <p className="text-gray-400">This is the total number of series in your library.</p>
             </div>

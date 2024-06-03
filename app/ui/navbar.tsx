@@ -48,19 +48,15 @@ export default function Component() {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
         {isOpen && (
-          <nav className="absolute top-16 left-0 w-full shadow border border-gray-700 bg-gray-800">
-            <ul className="flex w-full flex-col gap-4 p-4">
-              <li>
-                <Link className="hover:text-gray-400" href="/movies">
-                  <span className="">Films</span>
+          <nav className="absolute top-16 right-3 rounded shadow border border-gray-400 bg-gray-800">
+            <div className="grid gap-4 grid-cols-1 p-4 min-w-40">
+              <Link className="hover:text-blue-500 transition-colors" href="/movies">
+                  <span>Films</span>
                 </Link>
-              </li>
-              <li>
-                <Link className="hover:text-gray-400" href="/series">
-                  <span className="">Series</span>
+                <Link className="hover:text-blue-500 transition-colors" href="/series">
+                  <span>Series</span>
                 </Link>
-            </li>
-          </ul>
+            </div>
         </nav>
       )}
       </div>

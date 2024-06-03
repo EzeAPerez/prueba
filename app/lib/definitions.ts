@@ -12,6 +12,7 @@ export type Producto = {
     actors: string;
     totalSeasons: number;
     price: number;
+    disable: boolean;
   };
 
   export type User = {

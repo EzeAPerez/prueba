@@ -43,8 +43,8 @@ export async function addToCart(films:string){
   export async function estaPeliculaEnCarrito(pelicula: string) {
     const lista = cookies().get("cliente")?.value;
     return lista?.includes(pelicula);
-  }
-  
+  } 
+
   export async function authenticate(
     prevState: string | undefined,
     formData: FormData,

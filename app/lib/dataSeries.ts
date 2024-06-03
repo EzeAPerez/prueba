@@ -5,6 +5,7 @@ import { Producto } from "./definitions"
 import { unstable_noStore as noStore } from 'next/cache';
 
 var key="6d7434b2";
+const ITEMS_PER_PAGE = 12;
 
 export async function fetchseries() {
     // Add noStore() here to prevent the response from being cached.
@@ -17,7 +18,7 @@ export async function fetchseries() {
   
        console.log('Fetching revenue data...');
   
-      const data = await sql<Producto>`SELECT * FROM series`;
+      const data = await sql<Producto>`SELECT * FROM series WHERE disable = false`;
   
   
       return data.rows;
@@ -38,7 +39,7 @@ export async function fetchseries() {
   
        console.log('Fetching revenue data...'+serie);
   
-      const data = await sql<Producto>`SELECT * FROM series WHERE title ILIKE ${serie}`;
+      const data = await sql<Producto>`SELECT * FROM series WHERE title ILIKE ${serie} AND disable = false`;
       data.rows[0].type="serie";
 
       return data.rows[0];
@@ -53,6 +54,7 @@ export async function fetchSeriesForGrid(){
   try{
     const data = await sql<Producto>`SELECT *
     FROM series
+    WHERE disable = false
     ORDER BY year DESC
     LIMIT 3;`
     return data.rows;
@@ -75,11 +77,13 @@ export async function fetchFilteredSeries(
         *
       FROM series
       WHERE
-        title ILIKE ${`%${query}%`} OR
-        year ILIKE ${`%${query}%`} OR
-        actors ILIKE ${`%${query}%`} OR
-        writer ILIKE ${`%${query}%`} OR
-        genere ILIKE ${`%${query}%`}
+        disable = false AND (
+          title ILIKE ${`%${query}%`} OR
+          year ILIKE ${`%${query}%`} OR
+          actors ILIKE ${`%${query}%`} OR
+          writer ILIKE ${`%${query}%`} OR
+          genere ILIKE ${`%${query}%`}
+        )
       ORDER BY year DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -91,7 +95,7 @@ export async function fetchFilteredSeries(
   }
 }
 
-const ITEMS_PER_PAGE = 12;
+
 export async function fetchFilteredSeriess(
   query: string,
   currentPage: number,
@@ -105,11 +109,13 @@ export async function fetchFilteredSeriess(
         *
       FROM series
       WHERE
-        title ILIKE ${`%${query}%`} OR
-        year ILIKE ${`%${query}%`} OR
-        actors ILIKE ${`%${query}%`} OR
-        writer ILIKE ${`%${query}%`} OR
-        genere ILIKE ${`%${query}%`}
+        disable = false AND (
+          title ILIKE ${`%${query}%`} OR
+          year ILIKE ${`%${query}%`} OR
+          actors ILIKE ${`%${query}%`} OR
+          writer ILIKE ${`%${query}%`} OR
+          genere ILIKE ${`%${query}%`}
+        )
       ORDER BY year DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -127,17 +133,33 @@ export async function fetchSeriesTotalPages(query: string) {
     const count = await sql`SELECT COUNT(*)
     FROM series
     WHERE
-      title ILIKE ${`%${query}%`} OR
-      year ILIKE ${`%${query}%`} OR
-      actors ILIKE ${`%${query}%`} OR
-      writer ILIKE ${`%${query}%`}
-  `;
+      disable = false AND (
+        title ILIKE ${`%${query}%`} OR
+        year ILIKE ${`%${query}%`} OR
+        actors ILIKE ${`%${query}%`} OR
+        writer ILIKE ${`%${query}%`}
+      )
+    `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of invoices.');
+  }
+}
+
+export async function totalSeries(){
+  noStore();
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM series
+    WHERE disable = false
+    `;
+    return count.rows[0].count;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetchtotal number of series.');
   }
 }
 
@@ -152,6 +174,7 @@ async function getPrice(Serie:string){
     const price = await sql`SELECT price
     FROM series
     WHERE
+      disable = false AND
       title ILIKE ${Serie}
   `;
     return price.rows[0].price;
